@@ -5,6 +5,10 @@
 # define BUFF_SIZE 12
 #endif
 
+#ifndef FD_SIZE
+# define FD_SIZE 12
+#endif
+
 # include <unistd.h>
 # include <stdlib.h>
 

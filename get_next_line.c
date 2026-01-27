@@ -6,7 +6,7 @@ char	*resize2(char *stash, char *buff, char *ret)
 	size_t	len_buff;
 
 	len_buff = ft_strlen(buff);
-	while (ft_strchr(stash, '\n') == NULL || ft_strchr(stash, '\0') == NULL)
+	while (ft_strchr(stash, '\n') == NULL)
 	{
 		//Cpy stash en keep_stash
 		//free stash
@@ -14,7 +14,7 @@ char	*resize2(char *stash, char *buff, char *ret)
 		//Malloc stash con len_buff y len_stash
 		//Copy keep_stash y buff en stash
 	}
-	if (ft_strchr(stash, '\n') != NULL || ft_strchr(stash, '\0') != NULL)
+	if (ft_strchr(stash, '\n') != NULL)
 	{
 		//Len de ret sera len_stash - len(strchr(stash, '\n'))
 		//Malloc ret
@@ -24,7 +24,7 @@ char	*resize2(char *stash, char *buff, char *ret)
 		//Cpy keep_stash en stash (Malloc)
 		//free keep_stash
 	}
-	return (stash);
+	return (NULL);
 }
 
 

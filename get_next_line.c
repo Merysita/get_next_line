@@ -1,5 +1,50 @@
 #include "get_next_line.h"
 
+char	*resize2(char *stash, char *buff, char *ret)
+{
+	char	*keep_stash;
+	size_t	len_buff;
+
+	len_buff = ft_strlen(buff);
+	while (ft_strchr(stash, '\n') == NULL || ft_strchr(stash, '\0') == NULL)
+	{
+		//Cpy stash en keep_stash
+		//free stash
+		//SI len_buff > Buff_size    ->     len_buff = Buff_size
+		//Malloc stash con len_buff y len_stash
+		//Copy keep_stash y buff en stash
+	}
+	if (ft_strchr(stash, '\n') != NULL || ft_strchr(stash, '\0') != NULL)
+	{
+		//Len de ret sera len_stash - len(strchr(stash, '\n'))
+		//Malloc ret
+		//Cpy stash hasta \n o \0 en ret
+		//Cpy stash despuses de \n en keep_stash (Malloc strlen(strchr(stash, '\n')))
+		//free stash
+		//Cpy keep_stash en stash (Malloc)
+		//free keep_stash
+	}
+	return (stash);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Tenemos que redimensionar stash hasta que contenga un \n o \0
 char	*resize(char *stash, char buff[BUFF_SIZE])
 {
@@ -59,14 +104,14 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	line = NULL;
-	if (read(fd, buff, BUFF_SIZE) < 0 && fd <= 0)
+	if (read(fd, buff, BUFF_SIZE) < 0 || fd <= 0 || BUFF_SIZE < 1)
 		return (NULL);
 	if (!stash[fd])
-		stash = (char *) malloc(1 * sizeof(char));
-	if (!stash)
-		return (NULL);
-	stash = resize(stash, buff);
-	if ()
+		stash[fd] = (char *) malloc(1 * sizeof(char));
+	if (!stash[fd])
+		return (free(buff), NULL);
+	stash[fd] = resize(stash, buff);
+	if (!stash[fd])
 		return (free(stash), NULL);
 	if (ft_strchr(stash, '\n') != NULL)
 		return (line = free_stash(stash, line));
@@ -86,9 +131,11 @@ int main(void)
 	fd = open("test.txt", O_RDONLY);
 
 	read_bytes = read(fd, buff, 5);
-	//line = get_next_line(fd);
+
 	printf("%s", buff);
+	/*line = get_next_line(fd);
+	
 	read(fd, buff, 5);
 	printf("%s", buff);
-	free(line);
+	free(line);*/
 }

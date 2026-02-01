@@ -2,7 +2,7 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFF_SIZE
-# define BUFF_SIZE 1
+# define BUFF_SIZE 2
 #endif
 
 #ifndef FD_SIZE
@@ -12,6 +12,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);

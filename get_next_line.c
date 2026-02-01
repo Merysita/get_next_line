@@ -7,7 +7,6 @@
 //# AL BUFFER HAY QUE HACERLE UN MALLOC PARA PODER BORRAR Y VOLVER A LEER #
 //#########################################################################
 
-
 static char	*resize(char *stash, int fd)
 {
 	char	*buff;
@@ -25,14 +24,42 @@ static char	*resize(char *stash, int fd)
 		if (n_bytes == -1)
 			return(free(stash), free(buff), NULL);
 		if (n_bytes == 0)
+		{
+			/*write(1, "nBytes = 0\n", 11);
+			write(1, stash, ft_strlen(stash));
+			write(1, "\n", 1);*/
 			break;
+		}
+		//write(1, "Z\n", 2);
+
 		buff[n_bytes] = '\0';
-		keep_stash = ft_strdup(stash);
-		free(stash);
-		len_buff = ft_strlen(buff);
-		stash = ft_strjoin(keep_stash, buff, ft_strlen(keep_stash), len_buff);
-		free(keep_stash);
-		keep_stash = NULL;
+
+		/*write(1, "BBBBBBBBBBBBBBB\n", 17);
+		write(1, buff, strlen(buff));
+		write(1, "\n", 1);*/
+
+		if (!stash)
+		{
+			//write(1, "A\n", 2);
+			stash = ft_strdup(buff);
+		}
+		else
+		{
+			keep_stash = ft_strdup(stash);
+			free(stash);
+			len_buff = ft_strlen(buff);
+			//printf("keep_stash |%s|, stash |%s|", keep_stash, stash);
+			stash = ft_strjoin(keep_stash, buff, ft_strlen(keep_stash), len_buff);
+			//printf("keep_stash |%s|, stash |%s|", keep_stash, stash);
+			free(keep_stash);
+			keep_stash = NULL;
+		}
+
+
+		/*write(1, "AAAAAAAAAAAAAAAAAA\n", 20);
+		write(1, stash, strlen(stash));
+		write(1, "\n", 1);*/
+
 	}
 	free(buff);
 	buff = NULL;
@@ -59,12 +86,13 @@ static char	*ft_extract_line(char *stash, char *ret)
 	return (ret);
 }
 
-static char	*ft_free_stash(char *stash)
+char *ft_free_stash(char **stash)
 {
-	char	*ret;
+	char *ret;
 
-	ret = ft_strdup(stash);
-	free(stash);
+	ret = ft_strdup(*stash);
+	free(*stash);
+	*stash = NULL;
 	return(ret);
 }
 
@@ -78,13 +106,30 @@ char	*get_next_line(int fd)
 	ret = NULL;
 	if (fd <= 0 || BUFF_SIZE < 1)
 		return (NULL);
-	if (!stash)
-		stash = (char *) malloc(1 * sizeof(char));
-	if (!stash)
+	/*if (!stash)
+		stash = (char *) malloc(1 * sizeof(char));*/
+	/*if (!stash)
+	{
+			//write(1, "A\n", 2);
+
+		stash = (char *) malloc(2 * sizeof(char));
+		stash[0] = 'a';
+		stash[1] = '\0';
+		//stash = ft_strdup("hola");
+		//printf("stash |%s|", stash);
+
+	}*/
+	/*if (!stash)
+	{
+		write(1, "D\n", 2);
 		return (NULL);
+	}*/
 	stash = resize(stash, fd);
 	if (!stash)
-		return (free(stash), NULL);
+	{
+		//write(1, "C\n", 2);
+		return (NULL);
+	}
 	if (stash[0] == '\0')
 	{
 		free(stash);
@@ -93,10 +138,15 @@ char	*get_next_line(int fd)
 	}
 	if (ft_strchr(stash, '\n') != NULL)
 	{
+			//write(1, "B\n", 2);
+
 		ret = ft_extract_line(stash, ret);
 		return (ret);
 	}
-	return (ft_free_stash(stash));
+	/*write(1, stash, strlen(stash));
+	write(1, "\n", 1);
+	write(1, "Finish\n", 7);*/
+	return (ft_free_stash(&stash));
 }
 
 #include <stdio.h>
@@ -104,29 +154,25 @@ char	*get_next_line(int fd)
 
 int main(void)
 {
-	//char	*line = NULL;
-	int		fd;
-	//char	buff[1024];
-	//ssize_t	read_bytes;
-	//int		i = 2;
+	char *line = NULL;
+	int fd;
+	int i;
 
 	fd = open("test.txt", O_RDONLY);
-	if (fd < 0)
-		return (0);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	close(fd);
-	/*while (i)
+	line = get_next_line(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
+		//write(1, line, strlen(line));
+
 		printf("%s", line);
-		if (!line)
-			break ;
+		//write(1, "Z\n", 2);
+
 		free(line);
-		i--;
+		//printf("%s", line);
+
+		
+		line = get_next_line(fd);
 	}
 	close(fd);
-	return (0);*/
+	return (0);
 }

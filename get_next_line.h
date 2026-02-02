@@ -2,7 +2,7 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFF_SIZE
-# define BUFF_SIZE 2
+# define BUFF_SIZE 1000
 #endif
 
 #ifndef FD_SIZE

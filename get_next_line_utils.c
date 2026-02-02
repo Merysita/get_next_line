@@ -111,6 +111,5 @@ char	*ft_strjoin(char const *s1, char const *s2, size_t l_s1, size_t l_s2)
 	while (j < l_s2 && s2[j])
 		result[i++] = s2[j++];
 	result[i] = '\0';
-	//write(1, "Join\n", 5);
 	return (result);
 }

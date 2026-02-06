@@ -34,6 +34,8 @@ static char	*resize(char *stash, int fd)
 			free(stash);
 			len_buff = ft_strlen(buff);
 			stash = ft_strjoin(tmp, buff, ft_strlen(tmp), len_buff);
+			/*len_buff = ft_strlen(buff);
+			stash = ft_strjoin(stash, buff, ft_strlen(stash), len_buff);*/
 			free(tmp);
 			tmp = NULL;
 		}

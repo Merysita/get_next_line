@@ -2,11 +2,11 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFF_SIZE
-# define BUFF_SIZE 1000
+# define BUFF_SIZE 1
 #endif
 
 #ifndef FD_SIZE
-# define FD_SIZE 1
+# define FD_SIZE 42
 #endif
 
 # include <unistd.h>

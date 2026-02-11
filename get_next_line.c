@@ -1,17 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mantunez <mantunez@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/10 11:23:18 by mantunez          #+#    #+#             */
+/*   Updated: 2026/02/11 12:51:42 by mantunez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
-//====================== R E S I Z E =======================
-//Queremos que el stash, si no tiene un \n, se agrande y copie lo de buff.
-//Hasta hallar un \n
 
-//#########################################################################
-//# AL BUFFER HAY QUE HACERLE UN MALLOC PARA PODER BORRAR Y VOLVER A LEER #
-//#########################################################################
-
-static char	*resize(char *stash, int fd)
+static char *ft_join_buff_stash(char *stash, char *buff)
 {
-	char	*buff;
 	char	*tmp;
 	size_t	len_buff;
+
+	tmp = ft_strdup(stash);
+	free(stash);
+	len_buff = ft_strlen(buff);
+	stash = ft_strjoin(tmp, buff, ft_strlen(tmp), len_buff);
+	free(tmp);
+	tmp = NULL;
+	return (stash);
+}
+
+static char	*ft_resize(char *stash, int fd)
+{
+	char	*buff;
 	ssize_t	n_bytes;
 
 	n_bytes = 1;
@@ -22,37 +39,28 @@ static char	*resize(char *stash, int fd)
 	{
 		n_bytes = read(fd, buff, BUFF_SIZE);
 		if (n_bytes == -1)
-			return(free(stash), free(buff), NULL);
+			return (free(stash), free(buff), NULL);
 		if (n_bytes == 0)
-			break;
+			break ;
 		buff[n_bytes] = '\0';
 		if (!stash)
 			stash = ft_strdup(buff);
 		else
-		{
-			tmp = ft_strdup(stash);
-			free(stash);
-			len_buff = ft_strlen(buff);
-			stash = ft_strjoin(tmp, buff, ft_strlen(tmp), len_buff);
-			/*len_buff = ft_strlen(buff);
-			stash = ft_strjoin(stash, buff, ft_strlen(stash), len_buff);*/
-			free(tmp);
-			tmp = NULL;
-		}
+			stash = join_buff_stash(stash, buff);
 	}
 	free(buff);
 	buff = NULL;
 	return (stash);
 }
 
-char *ft_free_stash(char **stash)
+char	*ft_free_stash(char **stash)
 {
-	char *ret;
+	char	*ret;
 
 	ret = ft_strdup(*stash);
 	free(*stash);
 	*stash = NULL;
-	return(ret);
+	return (ret);
 }
 
 static char	*ft_extract_line(char **stash, char *ret)
@@ -73,15 +81,13 @@ static char	*ft_extract_line(char **stash, char *ret)
 	return (ret);
 }
 
-//Queremos que get next line cuando lo llamemos nos devuelva una frase
-
 char	*get_next_line(int fd)
 {
 	static char	*stash = NULL;
 	char		*ret;
 
 	ret = NULL;
-	if (fd <= 0 || BUFF_SIZE < 1)
+	if (fd < 0 || BUFF_SIZE < 1)
 		return (NULL);
 	stash = resize(stash, fd);
 	if (!stash)
@@ -100,29 +106,24 @@ char	*get_next_line(int fd)
 	return (ft_free_stash(&stash));
 }
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include <fcntl.h>
 
 int main(void)
 {
 	char *line = NULL;
 	int fd;
-	int i;
 
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
+	//fd = open(stdin, O_RDONLY);
+	line = get_next_line(0);
 	while (line)
 	{
-		//write(1, line, strlen(line));
 		printf("Main :%s", line);
-		//write(1, "Z\n", 2);
 
 		free(line);
-		//printf("%s", line);
-
 		
-		line = get_next_line(fd);
+		line = get_next_line(0);
 	}
 	close(fd);
 	return (0);
-}
+}*/

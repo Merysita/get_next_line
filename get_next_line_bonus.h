@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mantunez <mantunez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 11:47:34 by mantunez          #+#    #+#             */
-/*   Updated: 2026/02/18 11:29:49 by mantunez         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:34:56 by mantunez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFF_SIZE
-#  define BUFF_SIZE 1 
+#  define BUFF_SIZE 1000
 # endif
 
 # include <unistd.h>

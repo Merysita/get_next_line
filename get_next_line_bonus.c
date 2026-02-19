@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mantunez <mantunez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 11:23:18 by mantunez          #+#    #+#             */
-/*   Updated: 2026/02/19 11:51:26 by mantunez         ###   ########.fr       */
+/*   Updated: 2026/02/19 12:07:52 by mantunez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char *ft_join_buff_stash(char *stash, char *buff)
 {
@@ -83,47 +83,57 @@ static char	*ft_extract_line(char **stash, char *ret)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash = NULL;
+	static char	*stash[1024] = {NULL};
 	char		*ret;
 
 	ret = NULL;
-	if (fd < 0 || BUFF_SIZE < 1)
+	if (fd < 0 || fd > 1024 || BUFF_SIZE < 1)
 		return (NULL);
-	stash = ft_resize(stash, fd);
-	if (!stash)
+	stash[fd] = ft_resize(stash[fd], fd);
+	if (!stash[fd])
 		return (NULL);
-	if (stash[0] == '\0')
+	if (stash[fd][0] == '\0')
 	{
-		free(stash);
-		stash = NULL;
+		free(stash[fd]);
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	if (ft_strchr(stash, '\n') != NULL)
+	if (ft_strchr(stash[fd], '\n') != NULL)
 	{
-		ret = ft_extract_line(&stash, ret);
+		ret = ft_extract_line(&stash[fd], ret);
 		return (ret);
 	}
-	return (ft_free_stash(&stash));
+	return (ft_free_stash(&stash[fd]));
 }
 
-/*#include <stdio.h>
+#include <stdio.h>
 #include <fcntl.h>
 
 int main(void)
 {
 	char *line = NULL;
 	int fd;
+	int fd2;
 
-	//fd = open(stdin, O_RDONLY);
-	line = get_next_line(0);
+	fd = open("test.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	
+	line = get_next_line(fd);
 	while (line)
 	{
 		printf("Main :%s", line);
 
 		free(line);
 		
-		line = get_next_line(0);
+		line = get_next_line(fd2);
+		
+		printf("Main :%s", line);
+
+		free(line);
+		
+		line = get_next_line(fd);
 	}
 	close(fd);
+	close(fd2);
 	return (0);
-}*/
+}

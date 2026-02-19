@@ -14,7 +14,7 @@ Y a la hora de compilar podemos o no usar -D BUFFER_SIZE=n, donde n sería el n�
 > cc -Wall -Werror -Wextra -D BUFFER_SIZE=42 \<archivos>.c
 
 ### Recursos:
-La verdad es que los pocos tutoriales que vi sobre el proyecto no me ayudaron a entender casi nada, es más sentía más dudas. Así que en principio lo que recomendaría más es enteneder el uso de la variable estática, pelearte con el proyecto y preguntar a los compañeros.
+La verdad es que los pocos tutoriales que vi sobre el proyecto no me ayudaron a entender casi nada, es más sentía más dudas. Así que en principio lo que recomendaría más es enteneder el uso de la variable estática y read, pelearte con el proyecto y preguntar a los compañeros.
 
 **El uso de la IA**:
 Este proyecto se ha realizado enteramente sin ayuda de la IA, solo ayuda humana.
